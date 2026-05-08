@@ -29,3 +29,28 @@ Backend API for Krishi Wise Loan application built with Node.js, Express, and Mo
 ```bash
 cd backend
 npm install
+⚙️ Environment Variables
+
+Create .env file:
+
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+JWT_SECRET=your_secret_key
+▶️ Run Server
+node server.js
+
+OR (if nodemon is installed):
+
+npm run dev
+🔗 API Routes
+Auth
+POST /api/register
+POST /api/login
+Loan Analysis
+POST /api/analyze
+Schemes
+POST /api/schemes
+History
+GET /api/history/:name
+Weather
+GET /api/weather
