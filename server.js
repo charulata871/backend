@@ -12,7 +12,7 @@ const corsOptions = {
   origin: [
     "https://backend-1-xj9l.onrender.com",
     "http://localhost:5173",
-    "https://krishi-wise-loan-enb8.vercel.app"
+    "krishi-wise-loan-sqjh.vercel.app"
   ],
   credentials: true,
 };
