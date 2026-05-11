@@ -10,7 +10,7 @@ const app = express();
 
 const corsOptions = {
   origin: [
-    "http://localhost:8080",
+    "https://backend-1-xj9l.onrender.com",
     "http://localhost:5173",
     "https://krishi-wise-loan-enb8.vercel.app"
   ],
@@ -147,19 +147,16 @@ app.post("/api/analyze", async (req, res) => {
   try {
     const { name, income, loanAmt, rate, months } = req.body;
 
-    const P = parseFloat(loanAmt);
-    const N = parseInt(months);
-    const userIncome = parseFloat(income);
+    const P = Number(loanAmt);
+const N = Number(months);
+const userIncome = Number(income);
+const interestRate = Number(rate);
 
-    if (isNaN(P) || isNaN(rate) || isNaN(N) || isNaN(userIncome)) {
-      return res.status(400).json({ error: "Invalid inputs" });
-    }
+if (!P || !N || !userIncome || isNaN(interestRate)) {
+  return res.status(400).json({ error: "Invalid inputs" });
+}
 
-    if (P <= 0 || N <= 0 || userIncome <= 0) {
-      return res.status(400).json({ error: "Values must be positive" });
-    }
-
-    const R = parseFloat(rate) / 12 / 100;
+const R = interestRate / 12 / 100;
 
 if (isNaN(R)) {
   return res.status(400).json({ error: "Invalid interest rate" });
@@ -169,15 +166,11 @@ if (isNaN(R)) {
 
 let emi;
 
-if (Number(rate) === 0) {
+if (interestRate === 0) {
   emi = P / N;
 } else {
-  const denominator = Math.pow(1 + R, N) - 1;
-
-  emi =
-    denominator === 0
-      ? P / N
-      : (P * R * Math.pow(1 + R, N)) / denominator;
+  const pow = Math.pow(1 + R, N);
+  emi = (P * R * pow) / (pow - 1);
 }
 
 const totalPayment = emi * N;
