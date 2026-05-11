@@ -74,6 +74,8 @@ app.post("/api/login", async (req, res) => {
 
 app.post("/api/register", async (req, res) => {
   try {
+    console.log(req.body);
+
     const { name, password } = req.body || {};
 
     if (!name || !password) {
@@ -95,20 +97,12 @@ app.post("/api/register", async (req, res) => {
 
     await newUser.save();
 
-    const token = jwt.sign(
-      { id: newUser._id, name: newUser.name },
-      SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.json({ token });
+    res.json({ msg: "User registered successfully" });
 
   } catch (err) {
-  console.log("BACKEND ERROR:", err.response?.data);
-  console.log("FULL ERROR:", err);
-
-  alert("Registration failed");
-}
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
 });
 app.post("/api/schemes", async (req, res) => {
   console.log("🔥 SCHEMES HIT");
