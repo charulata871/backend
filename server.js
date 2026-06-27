@@ -7,20 +7,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-const allowedOrigins = [
-  "http://localhost:8080",
-  "http://localhost:5173"
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
+  origin: [
+    "http://localhost:5173",
+    /\.vercel\.app$/
+  ],
+  credentials: true
 }));
 
 
